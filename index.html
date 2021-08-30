@@ -305,7 +305,12 @@ async function getData(){
       
     
       <label for="charts">Visualize with</label>
-      <input type="text" placeholder = "bar_graph or pie_chart(all small letters)" name="charts" id="charts" required>
+      <select id="charts"  required>
+        <option>Please select chart to use:</option>
+        <option>bar_graph</option>
+        <option>pie_chart</option>
+  
+      </select>
       <button type="submit" class="registerbtn" id="my_button" >visualize </button>
       </div>
 
