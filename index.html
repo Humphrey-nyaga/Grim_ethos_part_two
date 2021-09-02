@@ -1,323 +1,348 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Basic -->
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My registration</title>
-    <script>
-      function myFunction() {
- var selected_val =  document.getElementById('region').value;
-    if(selected_val == "County")
-    {
-     document.querySelector('#my_counties').style.display = 'block';
-     document.querySelector('#my_counties_label').style.display = 'block'; 
-    }
-    else if(selected_val == "Sub_County")
-    {
-     document.querySelector('#my_counties').style.display = 'block';
-     document.querySelector('#my_counties_label').style.display = 'block'; 
-     document.querySelector('#my_sub_counties').style.display = 'block';
-     document.querySelector('#my_sub_counties_label').style.display = 'block'; 
-    }
-    else if(selected_val == "Ward")
-    {
-     document.querySelector('#my_counties').style.display = 'block';
-     document.querySelector('#my_counties_label').style.display = 'block'; 
-     document.querySelector('#my_sub_counties').style.display = 'block';
-     document.querySelector('#my_sub_counties_label').style.display = 'block'; 
-     document.querySelector('#my_wards').style.display = 'block';
-     document.querySelector('#my_wards_label').style.display = 'block'; 
-    }
-    else{
-
-    }
- }
-
- function my_sub_Function() {
- var selected_val =  document.getElementById('my_counties').value;
- const my_level_set = new Set();
-
-async function getData(){
-     const response = await fetch('Facility.csv');
-     const data = await response.text();
-     console.log("my selcted val "+selected_val);
-     // console.log(data);
-   var stand = 0;
-     
-     const rows = data.split('\n').slice(1);
-     rows.forEach(elt => {
-         const row = elt.split(',')
-         const Code = row[0];
-         const County = row[12];
-         const Sub_county = row[14];
-         const Ward = row[15];
-         if(County == selected_val)
-         {
-           my_level_set.add(Sub_county);
-         }   
-     })
-     
-    my_level_set.forEach(element =>{
-     my_text = element;
-     var x = document.getElementById("my_sub_counties");
-   var option = document.createElement("option");
-   option.text = my_text;
-   x.add(option);   
-    })
-    
- }
- getData();
-  
- }
-
- function my_wards_Function() {
- var selected_val =  document.getElementById('my_sub_counties').value;
- const my_level_set = new Set();
-
-async function getData(){
-     const response = await fetch('Facility.csv');
-     const data = await response.text();
-     console.log("my selcted val "+selected_val);
-     // console.log(data);
-   var stand = 0;
-     
-     const rows = data.split('\n').slice(1);
-     rows.forEach(elt => {
-         const row = elt.split(',')
-         const Code = row[0];
-         const County = row[12];
-         const Sub_county = row[14];
-         const Ward = row[15];
-         if(Sub_county == selected_val)
-         {
-           my_level_set.add(Ward);
-         }   
-     })
-     
-    my_level_set.forEach(element =>{
-     my_text = element;
-     var x = document.getElementById("my_wards");
-   var option = document.createElement("option");
-   option.text = my_text;
-   x.add(option);   
-    })
-    
- }
- getData();
-  
- }
-
- </script>
-</script>
     <style>
         body {
-          font-family: Arial, Helvetica, sans-serif;
-
+            font-family: Arial, Helvetica, sans-serif;
         }
         
         * {
-          box-sizing: border-box;
+            box-sizing: border-box;
         }
-        
         /* Add padding to containers */
+        
         .container {
-          padding: 16px;
-          background-color: white;
-        }
-        /* alert*/
-        .alert{
-          text-align: center;
-          padding: 10px;
-          background: #79c879;
-          color: #fff;
-          margin-bottom: 10px;
-          display: none;
+            padding: 16px;
+            background-color: white;
         }
         /* Full-width input fields */
-        input[type=text], input[type=email], select, input[type=password] {
-          width: 100%;
-          padding: 15px;
-          margin: 5px 0 22px 0;
-          display: inline-block;
-          border: none;
-          background: #f1f1f1;
-        }
-
-        #my_counties{
-           display: none;
-         
-        }
-        #my_counties_label{
-          display: none;
-        }
-        #my_sub_counties{
-           display: none;
-         
-        }
-        #my_sub_counties_label{
-          display: none;
-        }
-        #my_wards{
-           display: none;
-         
-        }
-        #my_wards_label{
-          display: none;
+        
+        input[type=text],
+        input[type=email],
+        input[type=date],
+        input[type=password] {
+            width: 100%;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
         }
         
-        input[type=text]:focus, input[type=email]:focus, select:focus, input[type=password]:focus {
-          background-color: #ddd;
-          outline: none;
+        input[type=text]:focus,
+        input[type=email]:focus,
+        input[type=date]:focus,
+        input[type=password]:focus {
+            background-color: lightblue;
+            outline: none;
         }
-        
         /* Overwrite default styles of hr */
+        
         hr {
-          border: 1px solid #f1f1f1;
-          margin-bottom: 25px;
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
         }
-        
         /* Set a style for the submit button */
+        
         .registerbtn {
-          background-color: #04AA6D;
-          color: white;
-          padding: 16px 20px;
-          margin: 8px 0;
-          border: none;
-          border-radius: 10px;
-          cursor: pointer;
-          opacity: 0.9;
+            background-color: #04AA6D;
+            color: white;
+            padding: 16px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            opacity: 0.9;
+        }
+        /* start for styling piechart section*/
+        
+        #mypieChart {
+            width: 100%;
+            height: 100%;
+            min-height: 250px;
         }
         
-        .registerbtn:hover {
-          opacity: 1;
+        .zc-ref {
+            display: none;
         }
-        
-        /* Add a blue text color to links */
-        a {
-          color: dodgerblue;
-        }
-        
-        /* Set a grey background color and center the text of the "sign in" section */
-        .signin {
-          background-color: #f1f1f1;
-          text-align: center;
-        }
+        /* end for styling piechart section*/
+    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-             /* start for styling piechart section*/
-    #mypieChart {
-      width: 100%;
-      height: 100%;
-      min-height: 250px;
-    }
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
- 
-    .zc-ref {
-      display: none;
-    }
-    /* end for styling piechart section*/
-        </style>
-        <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <!-- Site Metas -->
+    <title>Facility Visualizer</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" type="text/css" href="https://fontawesome.com/v5.15/icons?d=gallery&p=2&m=free">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="images/mybit.png" type="image/x-icon">
+    <link rel="mybit" href="images/mybit.png">
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/custom.css">
+
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+
 </head>
-<body style="margin-left: 20px;">
-    
-    <form id="form_input">
-      <label for="data_set">Enter data to filter with</label> <br>
-      <select id="data_set" required>
-        <option>Please select parameter to filter with:</option>
-        <option>keph_level</option>
-        <option>facility_type</option>
-        <option>facility_type_category</option>
-        <option>facility_owner</option>
-        <option>facility_owner_category</option>
-        <option>number_of_bed_and_cots</option>
-        <option>number_and_operational_status</option>
-      </select>
-      <label for="region">Enter region to filter with</label> 
-      <select id="region" onchange="myFunction()" required>
-        <option>Please select region:</option>
-        <option>Country</option>
-        <option>County</option>
-        <option>Sub_County</option>
-        <option>Ward</option>
-      </select>
-      <label for="region" id="my_counties_label">Select County Name</label> 
-      <select  id="my_counties" onchange="my_sub_Function()" reguired>
-        <option value='none'>Please select County:</option>
-        <option value='Baringo'>Baringo</option>
-        <option value='Bomet'>Bomet</option>
-        <option value='Bungoma'>Bungoma</option>
-        <option value='Busia'>Busia</option>
-        <option value='Elgeyo-Marakwet'>Elgeyo-Marakwet</option>
-        <option value='Embu'>Embu</option>
-        <option value='Garissa'>Garissa</option>
-        <option value='Homa Bay'>Homa Bay</option>
-        <option value='Isiolo'>Isiolo</option>
-        <option value='Kajiado'>Kajiado</option>
-        <option value='Kakamega'>Kakamega</option>
-        <option value='Kericho'>Kericho</option>
-        <option value='Kiambu'>Kiambu</option>
-        <option value='Kilifi'>Kilifi</option>
-        <option value='Kirinyaga'>Kirinyaga</option>
-        <option value='Kisii'>Kisii</option>
-        <option value='Kisumu'>Kisumu</option>
-        <option value='Kitui'>Kitui</option>
-        <option value='Kwale'>Kwale</option>
-        <option value='Laikipia'>Laikipia</option>
-        <option value='Lamu'>Lamu</option>
-        <option value='Machakos'>Machakos</option>
-        <option value='Makueni'>Makueni</option>
-        <option value='Mandera'>Mandera</option>
-        <option value='Marsabit'>Marsabit</option>
-        <option value='Meru'>Meru</option>
-        <option value='Migori'>Migori</option>
-        <option value='Mombasa'>Mombasa</option>
-        <option value='Murang'a'>Murang'a</option>
-        <option value='Nairobi City'>Nairobi City</option>
-        <option value='Nakuru'>Nakuru</option>
-        <option value='Nandi'>Nandi</option>
-        <option value='Narok'>Narok</option>
-        <option value='Nyamira'>Nyamira</option>
-        <option value='Nyandarua'>Nyandarua</option>
-        <option value='Nyeri'>Nyeri</option>
-        <option value='Samburu'>Samburu</option>
-        <option value='Siaya'>Siaya</option>
-        <option value='Taita-Taveta'>Taita-Taveta</option>
-        <option value='Tana River'>Tana River</option>
-        <option value='Tharaka-Nithi'>Tharaka-Nithi</option>
-        <option value='Trans Nzoia'>Trans Nzoia</option>
-        <option value='Turkana'>Turkana</option>
-        <option value='Uasin Gishu'>Uasin Gishu</option>
-        <option value='Vihiga'>Vihiga</option>
-        <option value='West Pokot'>West Pokot</option>
-        <option value='wajir'>wajir</option>
-    </select>
-    <label for="region" id="my_sub_counties_label">Select Sub_County Name</label> 
-      <select  id="my_sub_counties" onchange="my_wards_Function()" reguired>
-        <option value='none'>Please select the Sub_County:</option>
-   
-    </select>
-    <label for="region" id="my_wards_label">Select Ward Name</label> 
-      <select  id="my_wards" reguired>
-        <option value='none'>Please select the ward:</option>
-   
-    </select>
+
+<body>
+    <!-- Start Main Top -->
+    <header class="main-header">
+        <!-- Start Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+            <div class="container">
+                <!-- Start Header Navigation -->
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                    <div style="padding-left: 0px;">
+
+                        <p> <span class="myimages"><img src="images/lion.png" alt="image not found" height="50px">
+                    </span><span style="font-size:20px"><b>KENYA HEALTH INFORMATION SYSTEM</b> </span></p>
+                    </div>
+                </div>
+                <!-- End Header Navigation -->
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                        <li class="nav-item active"><a class="nav-link" href="index.html"><i class="fa fa-home" arial-hidden="true"></i>Home</a></li>
+                        <li class="dropdown">
+                            <li class="nav-item"><a class="nav-link" href="my_account.html"><i class="fas fa-tachometer-alt"></i></i>ALL INDICATORS </a></li>
+                            <li class="nav-item"><a class="nav-link" href="my_deposits.html"><i class="far fa-credit-card"></i>DISAGREGATED INDICATORS</a></li>
+                            <li class="nav-item"><a class="nav-link" href="withdrawals.html"><i class="fas fa-wallet"></i> INDICATOR GROUPS</a></li>
+
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+
+            <!-- End Navigation -->
+    </header>
+    <!-- End Main Top -->
+    <div class="row">
+        <div class="col-lg-6" style="padding: 20px;">
+            <div>
+        
+                    <button type="submit" class="registerbtn" id="my_button" style="margin-left: 15px;"> <h4><a href="visualize.html"><h3>GO TO KHIS AGGERGATE</h3></a></h4></button> 
+                  
+                
+                <div style="margin-top: 20px;">
+                    <div id='mypieChart'><a class="zc-ref" href="https://www.zingchart.com/">pie chart design</a></div>
+                    <script>
+                        ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+                        var myConfig = {
+                            type: "pie",
+                            plot: {
+                                borderColor: "#2B313B",
+                                borderWidth: 5,
+                                // slice: 90,
+                                valueBox: {
+                                    placement: 'out',
+                                    text: '%t\n%npv%',
+                                    fontFamily: "Open Sans"
+                                },
+                                tooltip: {
+                                    fontSize: '18',
+                                    fontFamily: "Open Sans",
+                                    padding: "5 10",
+                                    text: "%npv%"
+                                },
+                                animation: {
+                                    effect: 2,
+                                    method: 5,
+                                    speed: 900,
+                                    sequence: 1,
+                                    delay: 50
+                                }
+                            },
+                         
+                            title: {
+                                fontColor: "#8e99a9",
+                                text: 'Nairobi facility patients attendance rate',
+                                align: "left",
+                                offsetX: 10,
+                                fontFamily: "Open Sans",
+                                fontSize: 20
+                            },
+                            subtitle: {
+                                offsetX: 10,
+                                offsetY: 10,
+                                fontColor: "#8e99a9",
+                                fontFamily: "san serif",
+                                fontSize: "16",
+                                text: 'Top 5 highly visited June 2021',
+                                align: "left"
+                            },
+                            plotarea: {
+                                margin: "20 0 0 0"
+                            },
+                            series: [{
+                                values: [11.38],
+                                text: "Nairobi Hospital",
+                                backgroundColor: '#50ADF5',
+                            }, {
+                                values: [56.94],
+                                text: "Kenyatta Hospital",
+                                backgroundColor: '#FF7965',
+                                detached: true
+                            }, {
+                                values: [14.52],
+                                text: 'Pumwani',
+                                backgroundColor: '#FFCB45',
+                                detached: true
+                            }, {
+                                text: 'Kilimani',
+                                values: [9.69],
+                                backgroundColor: '#6877e5'
+                            }, {
+                                text: 'Mama Lucy',
+                                values: [7.48],
+                                backgroundColor: '#6FB07F'
+                            }]
+                        };
+
+                        zingchart.render({
+                            id: 'mypieChart',
+                            data: myConfig,
+                            height: '100%',
+                            width: '100%'
+                        });
+                    </script>
+                  
+                </div>
+            </div>
+          
+
+        </div>
+        <div class="col-lg-6" style="padding: 20px;">
+            <p style="margin-left: 30px;">
+                
+
+                    <center>
+                        <div id="myChart" style="margin-top: 20px;"></div>
+                    </center>
+                    <script>
+                        var chartData = {
+                            type: 'bar',
+                            "title": {
+                                "text": " Kakamega County"
+                            },
+                            "scale-y": {
+                                label: { /* Scale Title */
+                                    text: "KEPH Levels",
+                                },
+                                values: "0:8:1"
+                            },
+                            "scale-x": {
+                                label: { /* Scale Title */
+                                    text: "Health Facilities",
+                                },
+                                labels: ["Refferal", "dental ", "lurambi", "mwiyala", "tea zone"]
+                            },
+                            series: [{
+                                    values: [4, 2, 5, 3, 4],
+                                    'background-color': "#6666FF"
+                                },
+                                //{ values: [25, 57, 49, 60] }
+                            ]
+                        };
+                        zingchart.render({
+                            id: 'myChart',
+                            data: chartData,
+                            width: "90%"
+                        });
+                    </script>
+
+                    <center>
+                        <div id="twomyChart"></div>
+                    </center>
+                    <script>
+                        var chartData = {
+                            type: 'bar',
+                            "title": {
+                                "text": " Nairobi County"
+                            },
+                            "scale-y": {
+                                label: { /* Scale Title */
+                                    text: "Number of Beds and cots",
+                                },
+                                values: "0:120:10"
+                            },
+                            "scale-x": {
+                                label: { /* Scale Title */
+                                    text: "Health Facilities",
+                                },
+                                labels: ["Kenyatta <br> Hospital", "Pumwani", "Mama Lucy", "Kayole <br>Hospital", "Nairobi <br>hospital"],
+                               
+
+                            },
+                            series: [{
+                                values: [43, 78, 95, 20, 80],
+                                'background-color': "#0000FF"
+                            }, {
+                                values: [25, 57, 49, 60, 99],
+                                'background-color': "#008000"
+                            }]
+                        };
+                        zingchart.render({
+                            id: 'twomyChart',
+                            data: chartData,
+                            width: "90%"
+                        });
+                    </script>
+                  
+            </p>
+
+            </div>
+        </div>
+
+
+
+        <!-- Start copyright  -->
+        <div class="footer-copyright" style="width: 100%;">
+            <p class="footer-company">All Rights Reserved. &copy; 2021 <a href="#">Kenya health information system</a> Design By :
+                <a href="https://html.design/">GRoup three hackathons</a></p>
+        </div>
+        <!-- End of copyright  -->
+
+        <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+
+        <!-- ALL JS FILES -->
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <!-- ALL PLUGINS -->
+        <script src="js/jquery.superslides.min.js"></script>
+        <script src="js/bootstrap-select.js"></script>
+        <script src="js/inewsticker.js"></script>
+        <script src="js/bootsnav.js."></script>
+        <script src="js/images-loded.min.js"></script>
+        <script src="js/isotope.min.js"></script>
+        <script src="js/owl.carousel.min.js"></script>
+        <script src="js/baguetteBox.min.js"></script>
+        <script src="js/form-validator.min.js"></script>
+        <script src="js/contact-form-script.js"></script>
+        <script src="js/custom.js"></script>
       
-    
-      <label for="charts">Visualize with</label>
-      <select id="charts"  required>
-        <option>Please select chart to use:</option>
-        <option>bar_graph</option>
-        <option>pie_chart</option>
-  
-      </select>
-      <button type="submit" class="registerbtn" id="my_button" >visualize </button>
-      </div>
-
-      </form>
-
-      <div id="myChart" style="margin-left: 20px;"></div>
-      <div id='mypieChart' style="margin-bottom: 100px;"></div>
-      <script src="combined.js"></script>
 </body>
+
 </html>

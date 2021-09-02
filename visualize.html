@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My registration</title>
+    <script>
+      function myFunction() {
+ var selected_val =  document.getElementById('region').value;
+    if(selected_val == "County")
+    {
+     document.querySelector('#my_counties').style.display = 'block';
+     document.querySelector('#my_counties_label').style.display = 'block'; 
+    }
+    else if(selected_val == "Sub_County")
+    {
+     document.querySelector('#my_counties').style.display = 'block';
+     document.querySelector('#my_counties_label').style.display = 'block'; 
+     document.querySelector('#my_sub_counties').style.display = 'block';
+     document.querySelector('#my_sub_counties_label').style.display = 'block'; 
+    }
+    else if(selected_val == "Ward")
+    {
+     document.querySelector('#my_counties').style.display = 'block';
+     document.querySelector('#my_counties_label').style.display = 'block'; 
+     document.querySelector('#my_sub_counties').style.display = 'block';
+     document.querySelector('#my_sub_counties_label').style.display = 'block'; 
+     document.querySelector('#my_wards').style.display = 'block';
+     document.querySelector('#my_wards_label').style.display = 'block'; 
+    }
+    else{
+
+    }
+ }
+
+ function my_sub_Function() {
+ var selected_val =  document.getElementById('my_counties').value;
+ const my_level_set = new Set();
+
+async function getData(){
+     const response = await fetch('Facility.csv');
+     const data = await response.text();
+     console.log("my selcted val "+selected_val);
+     // console.log(data);
+   var stand = 0;
+     
+     const rows = data.split('\n').slice(1);
+     rows.forEach(elt => {
+         const row = elt.split(',')
+         const Code = row[0];
+         const County = row[12];
+         const Sub_county = row[14];
+         const Ward = row[15];
+         if(County == selected_val)
+         {
+           my_level_set.add(Sub_county);
+         }   
+     })
+     
+    my_level_set.forEach(element =>{
+     my_text = element;
+     var x = document.getElementById("my_sub_counties");
+   var option = document.createElement("option");
+   option.text = my_text;
+   x.add(option);   
+    })
+    
+ }
+ getData();
+  
+ }
+
+ function my_wards_Function() {
+ var selected_val =  document.getElementById('my_sub_counties').value;
+ const my_level_set = new Set();
+
+async function getData(){
+     const response = await fetch('Facility.csv');
+     const data = await response.text();
+     console.log("my selcted val "+selected_val);
+     // console.log(data);
+   var stand = 0;
+     
+     const rows = data.split('\n').slice(1);
+     rows.forEach(elt => {
+         const row = elt.split(',')
+         const Code = row[0];
+         const County = row[12];
+         const Sub_county = row[14];
+         const Ward = row[15];
+         if(Sub_county == selected_val)
+         {
+           my_level_set.add(Ward);
+         }   
+     })
+     
+    my_level_set.forEach(element =>{
+     my_text = element;
+     var x = document.getElementById("my_wards");
+   var option = document.createElement("option");
+   option.text = my_text;
+   x.add(option);   
+    })
+    
+ }
+ getData();
+  
+ }
+
+ </script>
+</script>
+    <style>
+        body {
+          font-family: Arial, Helvetica, sans-serif;
+
+        }
+        
+        * {
+          box-sizing: border-box;
+        }
+        
+        /* Add padding to containers */
+        .container {
+          padding: 16px;
+          background-color: white;
+        }
+        /* alert*/
+        .alert{
+          text-align: center;
+          padding: 10px;
+          background: #79c879;
+          color: #fff;
+          margin-bottom: 10px;
+          display: none;
+        }
+        /* Full-width input fields */
+        input[type=text], input[type=email], select, input[type=password] {
+          width: 100%;
+          padding: 15px;
+          margin: 5px 0 22px 0;
+          display: inline-block;
+          border: none;
+          background: #f1f1f1;
+          font-size: 20px;
+          border-radius: 10px;
+        }
+
+        #my_counties{
+           display: none;
+         
+        }
+        #my_counties_label{
+          display: none;
+        }
+        #my_sub_counties{
+           display: none;
+         
+        }
+        #my_sub_counties_label{
+          display: none;
+        }
+        #my_wards{
+           display: none;
+         
+        }
+        #my_wards_label{
+          display: none;
+        }
+        
+        input[type=text]:focus, input[type=email]:focus, select:focus, input[type=password]:focus {
+          background-color: #ddd;
+          outline: none;
+        }
+        
+        /* Overwrite default styles of hr */
+        hr {
+          border: 1px solid #f1f1f1;
+          margin-bottom: 25px;
+        }
+        
+        /* Set a style for the submit button */
+        .registerbtn {
+          background-color: #04AA6D;
+          color: white;
+          padding: 16px 20px;
+          margin: 8px 0;
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+          opacity: 0.9;
+        }
+        
+        .registerbtn:hover {
+          opacity: 1;
+        }
+        
+        /* Add a blue text color to links */
+        a {
+          color: dodgerblue;
+        }
+        
+        /* Set a grey background color and center the text of the "sign in" section */
+        .signin {
+          background-color: #f1f1f1;
+          text-align: center;
+        }
+
+             /* start for styling piechart section*/
+    #mypieChart {
+      width: 100%;
+      height: 100%;
+      min-height: 250px;
+    }
+
+ 
+    .zc-ref {
+      display: none;
+    }
+    /* end for styling piechart section*/
+        </style>
+        <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+</head>
+<body style="margin-left: 20px;">
+  <div style="background-color: dodgerblue; padding: 20px; color: whitesmoke;"><h1> <center> KENYA HEALTH INFORMATION SYSTEM AGGREGATE DATA VISUALIZER</h1></center></div>
+  <h2>KHIS Data Visualizer</h2>
+  <h4>Availing data from KMFHL at your disposal</h4>
+  <h4>You can filter data by facility type, owner, keph level, county, sub_county, ward, operational status e.t.c</h4>
+    <form id="form_input" style="margin: 50px; font-size: 25px;">
+      <label for="data_set">Enter data to filter with</label> <br>
+      <select id="data_set" required>
+        <option>Please select parameter to filter with:</option>
+        <option>keph_level</option>
+        <option>facility_type</option>
+        <option>facility_type_category</option>
+        <option>facility_owner</option>
+        <option>facility_owner_category</option>
+        <option>number_of_bed_and_cots</option>
+        <option>number_and_operational_status</option>
+      </select>
+      <label for="region">Enter region to filter with</label> 
+      <select id="region" onchange="myFunction()" required>
+        <option>Please select region:</option>
+        <option>Country</option>
+        <option>County</option>
+        <option>Sub_County</option>
+        <option>Ward</option>
+      </select>
+      <label for="region" id="my_counties_label">Select County Name</label> 
+      <select  id="my_counties" onchange="my_sub_Function()" reguired>
+        <option value='none'>Please select County:</option>
+        <option value='Baringo'>Baringo</option>
+        <option value='Bomet'>Bomet</option>
+        <option value='Bungoma'>Bungoma</option>
+        <option value='Busia'>Busia</option>
+        <option value='Elgeyo-Marakwet'>Elgeyo-Marakwet</option>
+        <option value='Embu'>Embu</option>
+        <option value='Garissa'>Garissa</option>
+        <option value='Homa Bay'>Homa Bay</option>
+        <option value='Isiolo'>Isiolo</option>
+        <option value='Kajiado'>Kajiado</option>
+        <option value='Kakamega'>Kakamega</option>
+        <option value='Kericho'>Kericho</option>
+        <option value='Kiambu'>Kiambu</option>
+        <option value='Kilifi'>Kilifi</option>
+        <option value='Kirinyaga'>Kirinyaga</option>
+        <option value='Kisii'>Kisii</option>
+        <option value='Kisumu'>Kisumu</option>
+        <option value='Kitui'>Kitui</option>
+        <option value='Kwale'>Kwale</option>
+        <option value='Laikipia'>Laikipia</option>
+        <option value='Lamu'>Lamu</option>
+        <option value='Machakos'>Machakos</option>
+        <option value='Makueni'>Makueni</option>
+        <option value='Mandera'>Mandera</option>
+        <option value='Marsabit'>Marsabit</option>
+        <option value='Meru'>Meru</option>
+        <option value='Migori'>Migori</option>
+        <option value='Mombasa'>Mombasa</option>
+        <option value='Murang'a'>Murang'a</option>
+        <option value='Nairobi City'>Nairobi City</option>
+        <option value='Nakuru'>Nakuru</option>
+        <option value='Nandi'>Nandi</option>
+        <option value='Narok'>Narok</option>
+        <option value='Nyamira'>Nyamira</option>
+        <option value='Nyandarua'>Nyandarua</option>
+        <option value='Nyeri'>Nyeri</option>
+        <option value='Samburu'>Samburu</option>
+        <option value='Siaya'>Siaya</option>
+        <option value='Taita-Taveta'>Taita-Taveta</option>
+        <option value='Tana River'>Tana River</option>
+        <option value='Tharaka-Nithi'>Tharaka-Nithi</option>
+        <option value='Trans Nzoia'>Trans Nzoia</option>
+        <option value='Turkana'>Turkana</option>
+        <option value='Uasin Gishu'>Uasin Gishu</option>
+        <option value='Vihiga'>Vihiga</option>
+        <option value='West Pokot'>West Pokot</option>
+        <option value='wajir'>wajir</option>
+    </select>
+    <label for="region" id="my_sub_counties_label">Select Sub_County Name</label> 
+      <select  id="my_sub_counties" onchange="my_wards_Function()" reguired>
+        <option value='none'>Please select the Sub_County:</option>
+   
+    </select>
+    <label for="region" id="my_wards_label">Select Ward Name</label> 
+      <select  id="my_wards" reguired>
+        <option value='none'>Please select the ward:</option>
+   
+    </select>
+      
+    
+      <label for="charts">Visualize with</label>
+      <select id="charts"  required>
+        <option>Please select chart to use:</option>
+        <option>bar_graph</option>
+        <option>pie_chart</option>
+  
+      </select>
+      <button type="submit" class="registerbtn" id="my_button" >visualize </button>
+      </div>
+
+      </form>
+
+      <div id="myChart" style="margin-left: 20px;"></div>
+      <div id='mypieChart' style="margin-bottom: 100px;"></div>
+      <script src="combined.js"></script>
+</body>
+</html>

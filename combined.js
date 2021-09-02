@@ -40,7 +40,7 @@ function submitForm(e)
     document.getElementById("my_button").disabled = true;
     if(data_set == "keph_level")
     {
-        console.log("something done")
+      document.getElementById("form_input").reset();
         keph_getData();
     }
     else if(data_set == "facility_type")
@@ -69,10 +69,11 @@ function submitForm(e)
         f_owners_getData();
     }
     else{
-        console.log("Nothing done");
-        
-        
+        console.log("Nothing done");   
     }
+    //reset the form
+    
+    return true;
 }
 
             var level2 = 0;
