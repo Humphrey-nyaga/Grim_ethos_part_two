@@ -1635,7 +1635,7 @@ else{
 }
 //end of number of beds and cots
 
-// start of number of beds and cots
+// start of number of facilities 
 
 async function number_and_operational_getData(){
     const response = await fetch('kmfl.csv');

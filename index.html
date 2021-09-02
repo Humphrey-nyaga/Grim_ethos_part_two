@@ -139,96 +139,229 @@
             <div>
         
                     <button type="submit" class="registerbtn" id="my_button" style="margin-left: 15px;"> <h4><a href="visualize.html"><h3>GO TO KHIS AGGERGATE</h3></a></h4></button> 
+                 <!-- Start of number of facilities in dashboard --> 
+                 <div>
+                    <div id="my_num_Chart" style="margin-left: 20px; margin-bottom: 30px;"></div>
+                    <script>
+                        number_and_operational_getData();
+                        var f_total = 0;
+                    var f_operational = 0;
+                    var num_of_beds = 0;
+                    var num_of_cots = 0;
+                    
+                    
+                    async function number_and_operational_getData(){
+                        const response = await fetch('kmfl.csv');
+                        const data = await response.text();
+                        // console.log(data);
+                        
+                        
+                        const rows = data.split('\n').slice(1);
+                        rows.forEach(elt => {
+                            const row = elt.split(',')
+                            const Code = row[0];
+                            // xlabels.push(Code);
+                            const Name = row[1];
+                            const beds = row[10];
+                            const cots = row[11];
+                            const operation = row[16];
+                            const Keph_level = row[4];
+                            const County = row[12];
+                            
+                            const Sub_county = row[14];
+                            const Ward = row[15];
+                        
+                        
+                                    f_total = f_total + 1;
+                                    //increment cots
+                                    if(isNaN(cots)){
+                                       
+                                     }else{
+                                        num_of_cots = num_of_cots + parseInt(cots) ;
+                                     }
+                                     //increment operational facilities
+                                     if(operation == "Operational")
+                                     {
+                                        f_operational = f_operational + 1;
+                                     }
+                                    
+                                     //increment beds
+                                     if(isNaN(beds)){
+                                       
+                                     }else{
+                                        num_of_beds = num_of_beds + parseInt(beds);
+                                     }
+                            
+                        })
+                    
+                            var total_max = f_total;
+                            total_max = total_max + 1;
+                            total_max = Math.ceil((total_max )/ 10) * 10;
+                        
+                       
+                          var title_name;
+                          var y_axis_text ="Number of Facilities";
+                             title_name = "Number of HEalth Facilities in Kenya ";
+                            
+                            var non_operational_f = f_total - f_operational;
+                            var chartData = {
+                            type: 'bar',
+                            "title":{  
+                                "text": title_name  
+                                }, 
+                                "scale-y":{ 
+                                  'min-value': 0,
+                                  'max-value': total_max, 
+                                    label: { // Scale Title 
+                                    text: y_axis_text,
+                                    },
+                                    "items-overlap":true,  
+                                    "item":{  
+                                        "font-angle":-90,
+                                         "offset-x":"7px"
+                                        }
+                                    },
+                                "scale-x":{  
+                                    label: { // Scale Title 
+                                    text: "Total facilities, Operational facilities and non_operational"
+                                    },
+                                    labels: ["Total <br> Facilities", "Operational <br> Facilities", "Non_Operational <br> Facilities"]
+                                    },
+                            series: [
+                                { 
+                                    values: [f_total, f_operational, non_operational_f],
+                                    'background-color': "#6666FF"
+                                },
+                            ]
+                            };
+                            zingchart.render({
+                            id: 'my_num_Chart',
+                            data: chartData,
+                            width: "80%"
+                            });
+                        }
+                    </script>
+
+                 </div>
+                 <!-- End  of number of facilities in dashboard --> 
+                 
+                 
                  <!-- Start of ownership in dashboard --> 
                 <div>
               
+    <div id="my_pie_owner" style="margin-left: 20px;"></div>
+<script>
+    
+var ministry_of_health = 0;
+var faith_based = 0;
+var non_governmental = 0;
+var private_practice = 0;
 
+f_owner_category_getData();
+async function f_owner_category_getData(){
+const response = await fetch('kmfl.csv');
+const data = await response.text();
+// console.log(data);
+const rows = data.split('\n').slice(1);
+rows.forEach(elt => {
+const row = elt.split(',')
+const facility_owner_category = row[8];
+const County = row[12];
+
+const Sub_county = row[14];
+const Ward = row[15];
+
+if(facility_owner_category == 'Ministry of Health'){
+ministry_of_health = ministry_of_health + 1 ;
+}
+else if(facility_owner_category == 'Private Practice'){
+private_practice = private_practice + 1 ;
+}
+else if(facility_owner_category == 'Faith Based Organization'){
+faith_based = faith_based + 1 ;
+}
+else if(facility_owner_category == 'Non-Governmental Organizations'){
+non_governmental = non_governmental + 1 ;
+}
+
+else{
+
+}
+
+})
+//calculate maximum
+var f_owner_c_max = ministry_of_health;
+if(private_practice > f_owner_c_max)
+{
+f_owner_c_max = private_practice;
+}
+else if(faith_based > f_owner_c_max)
+{
+f_owner_c_max = faith_based;
+}
+else if(non_governmental > f_owner_c_max)
+{
+f_owner_c_max = non_governmental;
+}
+else{
+
+}
+
+f_owner_c_max = f_owner_c_max + 1;
+f_owner_c_max = Math.ceil((f_owner_c_max )/ 10) * 10;
+
+
+var mytitle;
+console.log(ministry_of_health, non_governmental, faith_based, private_practice);
+
+
+var title_name;
+  var y_axis_text = "Number of Facilities";
+
+     title_name = "Health Facilities  in Kenya based on <br>  Facility owner Categories";
+      
+        var chartData = {
+        type: 'bar',
+        "title":{  
+            "text": title_name  
+            }, 
+            "scale-y":{  
+              'min-value': 0,
+     'max-value': f_owner_c_max,
+                label: { /* Scale Title */
+                text: y_axis_text,
+                },
+                "items-overlap":true,  
+      "item":{  
+          "font-angle":-90,
+           "offset-x":"7px"
+          }
+                },
+            "scale-x":{  
+                label: { /* Scale Title */
+                text: "Facility Owner Categories",
+                },
+                labels: ["Ministry  <br> of Health","Private <br> Practice", "Faith Based <br> Organization", "Non-Governmental <br> Organizations"]
+                
+                },
+        series: [
+            { 
+                values: [ministry_of_health, private_practice, faith_based, non_governmental],
+                'background-color': "#6666FF"
+            },
+        ]
+        };
+        zingchart.render({
+        id: 'my_pie_owner',
+        data: chartData,
+        width: "80%"
+        });
+
+   }
+</script>
                 </div>
                  <!-- End of ownership in dashboard --> 
-                <div style="margin-top: 20px;">
-                    <div id='mypieChart'><a class="zc-ref" href="https://www.zingchart.com/">pie chart design</a></div>
-                    <script>
-                        ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
-                        var myConfig = {
-                            type: "pie",
-                            plot: {
-                                borderColor: "#2B313B",
-                                borderWidth: 5,
-                                // slice: 90,
-                                valueBox: {
-                                    placement: 'out',
-                                    text: '%t\n%npv%',
-                                    fontFamily: "Open Sans"
-                                },
-                                tooltip: {
-                                    fontSize: '18',
-                                    fontFamily: "Open Sans",
-                                    padding: "5 10",
-                                    text: "%npv%"
-                                },
-                                animation: {
-                                    effect: 2,
-                                    method: 5,
-                                    speed: 900,
-                                    sequence: 1,
-                                    delay: 50
-                                }
-                            },
-                         
-                            title: {
-                                fontColor: "#8e99a9",
-                                text: 'Nairobi facility patients attendance rate',
-                                align: "left",
-                                offsetX: 10,
-                                fontFamily: "Open Sans",
-                                fontSize: 20
-                            },
-                            subtitle: {
-                                offsetX: 10,
-                                offsetY: 10,
-                                fontColor: "#8e99a9",
-                                fontFamily: "san serif",
-                                fontSize: "16",
-                                text: 'Top 5 highly visited June 2021',
-                                align: "left"
-                            },
-                            plotarea: {
-                                margin: "20 0 0 0"
-                            },
-                            series: [{
-                                values: [11.38],
-                                text: "Nairobi Hospital",
-                                backgroundColor: '#50ADF5',
-                            }, {
-                                values: [56.94],
-                                text: "Kenyatta Hospital",
-                                backgroundColor: '#FF7965',
-                                detached: true
-                            }, {
-                                values: [14.52],
-                                text: 'Pumwani',
-                                backgroundColor: '#FFCB45',
-                                detached: true
-                            }, {
-                                text: 'Kilimani',
-                                values: [9.69],
-                                backgroundColor: '#6877e5'
-                            }, {
-                                text: 'Mama Lucy',
-                                values: [7.48],
-                                backgroundColor: '#6FB07F'
-                            }]
-                        };
-
-                        zingchart.render({
-                            id: 'mypieChart',
-                            data: myConfig,
-                            height: '100%',
-                            width: '100%'
-                        });
-                    </script>
-                  
-                </div>
+        
             </div>
           
 
@@ -236,78 +369,236 @@
         <div class="col-lg-6" style="padding: 20px;">
             <p style="margin-left: 30px;">
                 
-
+      <!-- Start of KEPH LEvel--> 
                     <center>
-                        <div id="myChart" style="margin-top: 20px;"></div>
+                        <div id="my_keph_chart" style="margin-top: 20px;"></div>
                     </center>
                     <script>
-                        var chartData = {
-                            type: 'bar',
-                            "title": {
-                                "text": " Kakamega County"
-                            },
-                            "scale-y": {
-                                label: { /* Scale Title */
-                                    text: "KEPH Levels",
-                                },
-                                values: "0:8:1"
-                            },
-                            "scale-x": {
-                                label: { /* Scale Title */
-                                    text: "Health Facilities",
-                                },
-                                labels: ["Refferal", "dental ", "lurambi", "mwiyala", "tea zone"]
-                            },
-                            series: [{
-                                    values: [4, 2, 5, 3, 4],
-                                    'background-color': "#6666FF"
-                                },
-                                //{ values: [25, 57, 49, 60] }
-                            ]
-                        };
-                        zingchart.render({
-                            id: 'myChart',
-                            data: chartData,
-                            width: "90%"
-                        });
+                      keph_getData();
+var level2 = 0;
+            var level3 = 0;
+            var level4 = 0;
+            var level5 = 0;
+
+        async function keph_getData(){
+          
+            const response = await fetch('kmfl.csv');
+            const data = await response.text();
+            // console.log(data);
+
+           
+            const rows = data.split('\n').slice(1);
+            rows.forEach(elt => {
+                const row = elt.split(',')
+                const Code = row[0];
+                // xlabels.push(Code);
+                const Name = row[1];
+                const Keph_level = row[4];
+                const County = row[12];
+                
+                const Sub_county = row[14];
+                const Ward = row[15];
+                  if(Keph_level == 'Level 2'){
+                    level2 = level2 + 1 ;
+                }
+                 else if(Keph_level == 'Level 3'){
+                    level3 = level3 + 1 ;
+                }
+                 else if(Keph_level == 'Level 4'){
+                    level4 = level4 + 1 ;
+                }
+                 else if(Keph_level == 'Level 5'){
+                    level5 = level5 + 1 ;
+                }
+                else
+                {
+
+                }
+                 
+            })
+        
+       
+            //find maximum 
+            var max = level2;
+            if(level3 > max)
+            {
+              max = level3;
+            }
+            else if(level4 > max)
+            {
+              max = level4;
+            }
+            else if(level5 > max)
+            {
+              max = level5;
+            }
+            else 
+            {
+
+            }
+            var title_name;
+            var y_axis_text = "Number of Facilities";
+           
+               title_name = "Facilities distribution in Kenya <br> based on KEPH Levels";
+        
+        
+         max = max + 1;
+         max = Math.ceil(max / 10) * 10;
+      
+                
+                var chartData = {
+                type: 'bar',
+                "title":{  
+                    "text": title_name  
+                    }, 
+                    "scale-y":{  
+                      'min-value': 0,
+                      'max-value': max,
+                        
+                        label: { /* Scale Title */
+                        text: y_axis_text,
+                        },
+                        "items-overlap":true,  
+                        "item":{  
+                            "font-angle":-90,
+                             "offset-x":"7px"
+                            }
+
+                        },
+                    "scale-x":{  
+                        label: { /* Scale Title */
+                        text: "KEPH Levels",
+                        },
+                        labels: ["level2 ", "level3","level4", "level5"]
+                        },
+                series: [
+                    { 
+                        values: [level2, level3, level4, level5],
+                        'background-color': "#6666FF"
+                    },
+                ]
+                };
+                zingchart.render({
+                id: 'my_keph_chart',
+                data: chartData,
+                width: "80%"
+                });
+          } 
                     </script>
 
+                    <!-- End of KEPH in dashboard --> 
+
                     <center>
-                        <div id="twomyChart"></div>
+                        <div id="my_bed_Chart"></div>
                     </center>
                     <script>
-                        var chartData = {
-                            type: 'bar',
-                            "title": {
-                                "text": " Nairobi County"
-                            },
-                            "scale-y": {
-                                label: { /* Scale Title */
-                                    text: "Number of Beds and cots",
-                                },
-                                values: "0:120:10"
-                            },
-                            "scale-x": {
-                                label: { /* Scale Title */
-                                    text: "Health Facilities",
-                                },
-                                labels: ["Kenyatta <br> Hospital", "Pumwani", "Mama Lucy", "Kayole <br>Hospital", "Nairobi <br>hospital"],
-                               
+                         beds_and_cots_getData();
+    var f_total = 0;
+var f_operational = 0;
+var num_of_beds = 0;
+var num_of_cots = 0;
 
-                            },
-                            series: [{
-                                values: [43, 78, 95, 20, 80],
-                                'background-color': "#0000FF"
-                            }, {
-                                values: [25, 57, 49, 60, 99],
-                                'background-color': "#008000"
-                            }]
-                        };
-                        zingchart.render({
-                            id: 'twomyChart',
-                            data: chartData,
-                            width: "90%"
-                        });
+
+async function beds_and_cots_getData(){
+    const response = await fetch('kmfl.csv');
+    const data = await response.text();
+    // console.log(data);
+    
+    
+    const rows = data.split('\n').slice(1);
+    rows.forEach(elt => {
+        const row = elt.split(',')
+        const Code = row[0];
+        // xlabels.push(Code);
+        const Name = row[1];
+        const beds = row[10];
+        const cots = row[11];
+        const operation = row[16];
+        const Keph_level = row[4];
+        const County = row[12];
+        
+        const Sub_county = row[14];
+        const Ward = row[15];
+    
+    
+                f_total = f_total + 1;
+                //increment cots
+                if(isNaN(cots)){
+                   
+                 }else{
+                    num_of_cots = num_of_cots + parseInt(cots) ;
+                 }
+                 //increment operational facilities
+                 if(operation == "Operational")
+                 {
+                    f_operational = f_operational + 1;
+                 }
+                
+                 //increment beds
+                 if(isNaN(beds)){
+                   
+                 }else{
+                    num_of_beds = num_of_beds + parseInt(beds);
+                 }
+        
+    })
+
+    var beds_cots_max = num_of_beds;
+            if(num_of_cots > beds_cots_max)
+            {
+              beds_cots_max = num_of_cots;
+            }
+            else{
+
+            }
+
+            beds_cots_max = beds_cots_max + 1;
+            beds_cots_max = Math.ceil((beds_cots_max )/ 10) * 10;
+
+
+  var title_name;
+  var y_axis_text ="Number of Beds and cots";
+
+     title_name = "Number of Beds and Cots in All  <br> Facilities in Kenya ";
+  
+    var chartData = {
+    type: 'bar',
+    "title":{  
+        "text": title_name  
+        }, 
+        "scale-y":{ 
+          'min-value': 0,
+          'max-value': beds_cots_max, 
+            label: { // Scale Title 
+            text: y_axis_text,
+            },
+            "items-overlap":true,  
+            "item":{  
+                "font-angle":-90,
+                 "offset-x":"7px"
+                }
+            
+            },
+        "scale-x":{  
+            label: { // Scale Title 
+            text: "Bed and cots in "+f_operational+" Operational facilities"
+            },
+            labels: ["Beds", "Cots"]
+            },
+    series: [
+        { 
+            values: [num_of_beds, num_of_cots],
+            'background-color': "#6666FF"
+        },
+    ]
+    };
+    zingchart.render({
+    id: 'my_bed_Chart',
+    data: chartData,
+    width: "80%"
+    });
+
+    }
                     </script>
                   
             </p>
