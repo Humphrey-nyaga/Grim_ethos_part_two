@@ -1,5 +1,10 @@
 //An event listener for submission
 document.getElementById('form_input').addEventListener('submit', submitForm);
+function autoRefreshPage()
+{
+    window.location = window.location.href;
+}
+//setInterval('autoRefreshPage()', 10000);
 // we declare the parameters we are getting from the input form as global
 var region;
 var region_name;
@@ -40,7 +45,7 @@ function submitForm(e)
     document.getElementById("my_button").disabled = true;
     if(data_set == "keph_level")
     {
-      document.getElementById("form_input").reset();
+      
         keph_getData();
     }
     else if(data_set == "facility_type")
@@ -72,7 +77,7 @@ function submitForm(e)
         console.log("Nothing done");   
     }
     //reset the form
-    
+    document.getElementById("form_input").reset();
     return true;
 }
 
@@ -83,7 +88,7 @@ function submitForm(e)
 
         async function keph_getData(){
           
-            const response = await fetch('Facility.csv');
+            const response = await fetch('kmfl.csv');
             const data = await response.text();
             // console.log(data);
 
@@ -351,7 +356,7 @@ function submitForm(e)
         var lab = 0;
 
     async function f_type_getData(){
-        const response = await fetch('Facility.csv');
+        const response = await fetch('kmfl.csv');
         const data = await response.text();
         // console.log(data);
 
@@ -549,7 +554,7 @@ function submitForm(e)
         })
 
         //calculate maximum
-        var f_t_max = pri_care_hosi;
+        var f_t_max = dispensary;
         if(basic_heal_center > f_t_max)
         {
           f_t_max = basic_heal_center;
@@ -570,9 +575,9 @@ function submitForm(e)
         {
           f_t_max = lab;
         }
-        else if(dispensary > f_t_max)
+        else if(pri_care_hosi > f_t_max)
         {
-          f_t_max = dispensary;
+          f_t_max = pri_care_hosi;
         }
         else if(med_center > f_t_max)
         {
@@ -787,7 +792,7 @@ function submitForm(e)
     var MED_CLINIC = 0;
 
 async function f_type_category_getData(){
-    const response = await fetch('Facility.csv');
+    const response = await fetch('kmfl.csv');
     const data = await response.text();
     // console.log(data);
 
@@ -1102,7 +1107,7 @@ if(chart == "bar_graph")
     
 
 async function f_owner_category_getData(){
-    const response = await fetch('Facility.csv');
+    const response = await fetch('kmfl.csv');
     const data = await response.text();
     // console.log(data);
     const rows = data.split('\n').slice(1);
@@ -1367,7 +1372,7 @@ var num_of_beds = 0;
 var num_of_cots = 0;
 
 async function bed_and_cots_getData(){
-const response = await fetch('Facility.csv');
+const response = await fetch('kmfl.csv');
 const data = await response.text();
 // console.log(data);
 
@@ -1633,7 +1638,7 @@ else{
 // start of number of beds and cots
 
 async function number_and_operational_getData(){
-    const response = await fetch('Facility.csv');
+    const response = await fetch('kmfl.csv');
     const data = await response.text();
     // console.log(data);
     
@@ -1902,7 +1907,7 @@ var pp_clinical = 0;
 var non_government = 0;
 
 async function f_owners_getData(){
-const response = await fetch('Facility.csv');
+const response = await fetch('kmfl.csv');
 const data = await response.text();
 // console.log(data);
 
