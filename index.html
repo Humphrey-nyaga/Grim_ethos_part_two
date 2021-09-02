@@ -131,115 +131,180 @@
                 <!-- /.navbar-collapse -->
             </div>
 
-            <!-- End Navigation -->
+            <style>
+                                 /* start for styling piechart section*/
+    #my_f_type_Chart {
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+    }
+
+    #my_f_owner_Chart {
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+    }
+ 
+    .zc-ref {
+      display: none;
+    }
+    /* end for styling piechart section*/
+            </style>
     </header>
     <!-- End Main Top -->
     <div class="row">
         <div class="col-lg-6" style="padding: 20px;">
             <div>
         
-                    <button type="submit" class="registerbtn" id="my_button" style="margin-left: 15px;"> <h4><a href="visualize.html"><h3>GO TO KHIS AGGERGATE</h3></a></h4></button> 
+                    <button type="submit" class="registerbtn" id="my_button" style="margin-left: 15px;"> <h4><a href="visualize.html" style="color: whitesmoke;"><h3>GO TO KHIS AGGERGATE</h3></a></h4></button> 
                  <!-- Start of number of facilities in dashboard --> 
                  <div>
-                    <div id="my_num_Chart" style="margin-left: 20px; margin-bottom: 30px;"></div>
+                    <div id="my_f_type_Chart" style="margin-left: 20px;"></div>
                     <script>
-                        number_and_operational_getData();
-                        var f_total = 0;
-                    var f_operational = 0;
-                    var num_of_beds = 0;
-                    var num_of_cots = 0;
+                      f_type_category_getData();
+   var HOSPITAL = 0;
+    var NURSE_HOMES = 0;
+    var DISPENSARY = 0;
+    var HEALTH_CENTER = 0;
+    var MED_CENTER = 0;
+    var MED_CLINIC = 0;
+
+async function f_type_category_getData(){
+    const response = await fetch('kmfl.csv');
+    const data = await response.text();
+    // console.log(data);
+
+   
+    const rows = data.split('\n').slice(1);
+    rows.forEach(elt => {
+        const row = elt.split(',')
+        const Code = row[0];
+        // xlabels.push(Code);
+        const Name = row[1];
+        const Keph_level = row[4];
+        const facility_type = row[5];
+        const facility_type_category = row[6];
+        const County = row[12];
+        
+        const Sub_county = row[14];
+        const Ward = row[15];
+
+      
+         if(facility_type_category == 'HOSPITALS'){
+                    HOSPITAL = HOSPITAL + 1 ;
+                }
+                else if(facility_type_category == 'DISPENSARY'){
+                    DISPENSARY = DISPENSARY + 1 ;
+                }
+                 else if(facility_type_category == 'HEALTH CENTRE'){
+                    HEALTH_CENTER = HEALTH_CENTER + 1 ;
+                }
+                 else if(facility_type_category == 'MEDICAL CLINIC'){
+                    MED_CENTER = MED_CENTER + 1 ;
+                }
+                else if(facility_type_category == 'MEDICAL CENTER')
+                {
+                    MED_CLINIC = MED_CLINIC + 1;
+                }
+                else if(facility_type_category == 'NURSING HOME')
+                {
+                    NURSE_HOMES = NURSE_HOMES + 1;
+                }
+                 else{
                     
-                    
-                    async function number_and_operational_getData(){
-                        const response = await fetch('kmfl.csv');
-                        const data = await response.text();
-                        // console.log(data);
-                        
-                        
-                        const rows = data.split('\n').slice(1);
-                        rows.forEach(elt => {
-                            const row = elt.split(',')
-                            const Code = row[0];
-                            // xlabels.push(Code);
-                            const Name = row[1];
-                            const beds = row[10];
-                            const cots = row[11];
-                            const operation = row[16];
-                            const Keph_level = row[4];
-                            const County = row[12];
-                            
-                            const Sub_county = row[14];
-                            const Ward = row[15];
-                        
-                        
-                                    f_total = f_total + 1;
-                                    //increment cots
-                                    if(isNaN(cots)){
-                                       
-                                     }else{
-                                        num_of_cots = num_of_cots + parseInt(cots) ;
-                                     }
-                                     //increment operational facilities
-                                     if(operation == "Operational")
-                                     {
-                                        f_operational = f_operational + 1;
-                                     }
-                                    
-                                     //increment beds
-                                     if(isNaN(beds)){
-                                       
-                                     }else{
-                                        num_of_beds = num_of_beds + parseInt(beds);
-                                     }
-                            
-                        })
-                    
-                            var total_max = f_total;
-                            total_max = total_max + 1;
-                            total_max = Math.ceil((total_max )/ 10) * 10;
-                        
-                       
-                          var title_name;
-                          var y_axis_text ="Number of Facilities";
-                             title_name = "Number of HEalth Facilities in Kenya ";
-                            
-                            var non_operational_f = f_total - f_operational;
-                            var chartData = {
-                            type: 'bar',
-                            "title":{  
-                                "text": title_name  
-                                }, 
-                                "scale-y":{ 
-                                  'min-value': 0,
-                                  'max-value': total_max, 
-                                    label: { // Scale Title 
-                                    text: y_axis_text,
-                                    },
-                                    "items-overlap":true,  
-                                    "item":{  
-                                        "font-angle":-90,
-                                         "offset-x":"7px"
-                                        }
-                                    },
-                                "scale-x":{  
-                                    label: { // Scale Title 
-                                    text: "Total facilities, Operational facilities and non_operational"
-                                    },
-                                    labels: ["Total <br> Facilities", "Operational <br> Facilities", "Non_Operational <br> Facilities"]
-                                    },
-                            series: [
-                                { 
-                                    values: [f_total, f_operational, non_operational_f],
-                                    'background-color': "#6666FF"
-                                },
-                            ]
-                            };
-                            zingchart.render({
-                            id: 'my_num_Chart',
-                            data: chartData,
-                            width: "80%"
-                            });
-                        }
+                }
+        
+    })
+         
+
+           console.log(HEALTH_CENTER, DISPENSARY, MED_CENTER, MED_CLINIC, NURSE_HOMES,HOSPITAL);
+
+
+      var title_name;
+      var mytitle;
+   
+          mytitle = "Facilities distribution rate based on Facility Type Categories in Kenya";
+    
+      
+        ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+        var myConfig = {
+          type: "pie",
+          plot: {
+            borderColor: "#2B313B",
+            borderWidth: 2,
+            // slice: 90,
+            valueBox: {
+              placement: 'out',
+              text: '%t\n%npv%',
+              fontFamily: "Open Sans"
+            },
+            tooltip: {
+              fontSize: '18',
+              fontFamily: "Open Sans",
+              padding: "5 10",
+              "text":"%t (%v)"
+            },
+            animation: {
+              effect: 2,
+              method: 5,
+              speed: 900,
+              sequence: 1,
+              delay: 50
+            }
+          },
+  
+          title: {
+            fontColor: "#8e99a9",
+            text: mytitle,
+            align: "center",
+            offsetX: 10,
+            fontFamily: "Open Sans",
+            fontSize: 20
+          },
+          plotarea: {
+            margin: "20 0 0 0"
+          },
+
+          series: [{
+              values: [HOSPITAL],
+              text: "HOSPITALS",
+              backgroundColor: '#50ADF5',
+            },
+            {
+              values: [DISPENSARY],
+              text: "DISPENSARIES",
+              backgroundColor: '#FF7965'
+            },
+            {
+              values: [HEALTH_CENTER],
+              text: 'HEALTH CENTRES',
+              backgroundColor: '#FFCB45'
+            },
+            {
+              text: 'MEDICAL CLINICS',
+              values: [MED_CLINIC],
+              backgroundColor: '#6877e5'
+            },
+            {
+              text: 'MEDICAL CENTERS',
+              values: [MED_CENTER],
+              backgroundColor: '#7D0552'
+            },
+            {
+              text: 'NURSING HOMES',
+              values: [NURSE_HOMES],
+              backgroundColor: '#6FB07F'
+            }
+          ]
+        };
+     
+        zingchart.render({
+          id: 'my_f_type_Chart',
+          data: myConfig,
+          height: '100%',
+          width: '100%'
+        });
+    }
                     </script>
 
                  </div>
@@ -248,11 +313,11 @@
                  
                  <!-- Start of ownership in dashboard --> 
                 <div>
-              
-    <div id="my_pie_owner" style="margin-left: 20px;"></div>
+                    <div id="my_bed_Chart"></div>   
+    
 <script>
     
-var ministry_of_health = 0;
+    var ministry_of_health = 0;
 var faith_based = 0;
 var non_governmental = 0;
 var private_practice = 0;
@@ -316,45 +381,77 @@ console.log(ministry_of_health, non_governmental, faith_based, private_practice)
 
 
 var title_name;
-  var y_axis_text = "Number of Facilities";
-
-     title_name = "Health Facilities  in Kenya based on <br>  Facility owner Categories";
-      
-        var chartData = {
-        type: 'bar',
-        "title":{  
-            "text": title_name  
-            }, 
-            "scale-y":{  
-              'min-value': 0,
-     'max-value': f_owner_c_max,
-                label: { /* Scale Title */
-                text: y_axis_text,
-                },
-                "items-overlap":true,  
-      "item":{  
-          "font-angle":-90,
-           "offset-x":"7px"
-          }
-                },
-            "scale-x":{  
-                label: { /* Scale Title */
-                text: "Facility Owner Categories",
-                },
-                labels: ["Ministry  <br> of Health","Private <br> Practice", "Faith Based <br> Organization", "Non-Governmental <br> Organizations"]
-                
-                },
-        series: [
-            { 
-                values: [ministry_of_health, private_practice, faith_based, non_governmental],
-                'background-color': "#6666FF"
+      var mytitle;
+  
+          mytitle = "Facilities distribution rate based on Facility Owner Categories in Kenya";
+        ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+        var myConfig = {
+          type: "pie",
+          plot: {
+            borderColor: "#2B313B",
+            borderWidth: 2,
+            // slice: 90,
+            valueBox: {
+              placement: 'out',
+              text: '%t\n%npv%',
+              fontFamily: "Open Sans"
             },
-        ]
+            tooltip: {
+              fontSize: '18',
+              fontFamily: "Open Sans",
+              padding: "5 10",
+              "text":"%t (%v)"
+            },
+            animation: {
+              effect: 2,
+              method: 5,
+              speed: 900,
+              sequence: 1,
+              delay: 50
+            }
+          },
+  
+          title: {
+            fontColor: "#8e99a9",
+            text: mytitle,
+            align: "center",
+            offsetX: 10,
+            fontFamily: "Open Sans",
+            fontSize: 20
+          },
+          plotarea: {
+            margin: "20 0 0 0"
+          },
+
+          series: [{
+              values: [non_governmental],
+              text: "Non-Governmental Organizations",
+              backgroundColor: '#50ADF5',
+            },
+            {
+              values: [ministry_of_health],
+              text: "Ministry of Health",
+              backgroundColor: '#FF7965'
+            },
+            {
+              values: [private_practice],
+              text: 'Private Practice',
+              backgroundColor: '#FFCB45'
+            },
+           
+            {
+              text: 'Faith Based Organizations',
+              values: [faith_based],
+              backgroundColor: '#6FB07F'
+            }
+          ]
         };
+     
         zingchart.render({
-        id: 'my_pie_owner',
-        data: chartData,
-        width: "80%"
+          id: 'my_f_owner_Chart',
+          data: myConfig,
+          height: '100%',
+          width: '100%'
         });
 
    }
@@ -465,6 +562,9 @@ var level2 = 0;
                             }
 
                         },
+                        plot: {
+                         styles: [ "blue", "green", "#800080", "red" ]
+                        },
                     "scale-x":{  
                         label: { /* Scale Title */
                         text: "KEPH Levels",
@@ -474,7 +574,7 @@ var level2 = 0;
                 series: [
                     { 
                         values: [level2, level3, level4, level5],
-                        'background-color': "#6666FF"
+                        
                     },
                 ]
                 };
@@ -489,7 +589,7 @@ var level2 = 0;
                     <!-- End of KEPH in dashboard --> 
 
                     <center>
-                        <div id="my_bed_Chart"></div>
+                        <div id="my_f_owner_Chart" style="margin-left: 20px;"></div>
                     </center>
                     <script>
                          beds_and_cots_getData();
@@ -579,6 +679,9 @@ async function beds_and_cots_getData(){
                 }
             
             },
+            plot: {
+                         styles: [ "#7D0552", "#342D7E" ]
+                 },
         "scale-x":{  
             label: { // Scale Title 
             text: "Bed and cots in "+f_operational+" Operational facilities"

@@ -232,6 +232,9 @@ function submitForm(e)
                             }
 
                         },
+                        plot: {
+                          styles: [ "blue", "green", "#800080", "red" ]
+                         },
                     "scale-x":{  
                         label: { /* Scale Title */
                         text: "KEPH Levels",
@@ -241,7 +244,7 @@ function submitForm(e)
                 series: [
                     { 
                         values: [level2, level3, level4, level5],
-                        'background-color': "#6666FF"
+                        'background-color': "#008000"
                     },
                 ]
                 };
@@ -283,7 +286,7 @@ function submitForm(e)
                   fontSize: '18',
                   fontFamily: "Open Sans",
                   padding: "5 10",
-                  text: "%npv%"
+                  "text":"%t (%v)"
                 },
                 animation: {
                   effect: 2,
@@ -627,6 +630,9 @@ function submitForm(e)
                          "offset-x":"7px"
                         }
                     },
+                    plot: {
+                      styles: [ "blue", "green", "#800080", "#F535AA","yellow", "brown", "#151B54", "orange", "#6AFB92","red" ]
+                     },
                 "scale-x":{  
                     label: { /* Scale Title */
                     text: "Facility types",
@@ -681,7 +687,7 @@ function submitForm(e)
                   fontSize: '18',
                   fontFamily: "Open Sans",
                   padding: "5 10",
-                  text: "%npv%"
+                  "text":"%t (%v)"
                 },
                 animation: {
                   effect: 2,
@@ -716,13 +722,13 @@ function submitForm(e)
                     detached: true
                   },
                 {
-                    text: 'Nursing and Maternity Home',
+                    text: 'Nursing and Maternity Homes',
                     values: [nurse_and_maternity],
                     backgroundColor: '#FF69B4'
                   },
                 {
                     values: [med_center],
-                    text: "Medical center",
+                    text: "Medical centers",
                     backgroundColor: '#FF7965',
                     detached: true
                   },
@@ -733,7 +739,7 @@ function submitForm(e)
                   },
                 {
                     values: [med_clinic],
-                    text: 'Medical clinic',
+                    text: 'Medical clinics',
                     backgroundColor: '#FFCB45',
                     detached: true
                   },
@@ -741,7 +747,7 @@ function submitForm(e)
                  
                 
                   {
-                    text: 'Comprehensive health Centre',
+                    text: 'Comprehensive health Centres',
                     values: [comp_health_care],
                     backgroundColor: '#191970'
                   },
@@ -761,7 +767,7 @@ function submitForm(e)
 
             
                 {
-                  text: 'Laboratory',
+                  text: 'Laboratories',
                   values: [lab],
                   backgroundColor: '#696969'
                 }
@@ -977,6 +983,9 @@ if(chart == "bar_graph")
                      "offset-x":"7px"
                     }
                 },
+                plot: {
+                  styles: [ "#151B54", "#F535AA","yellow", "brown",  "#6AFB92","orange" ]
+                 },
             "scale-x":{  
                 label: { /* Scale Title */
                 text: "Facility types Categories",
@@ -986,8 +995,7 @@ if(chart == "bar_graph")
                 },
         series: [
             { 
-                values: [DISPENSARY, MED_CENTER, MED_CLINIC, NURSE_HOMES, HEALTH_CENTER, HOSPITAL],
-                'background-color': "#6666FF"
+                values: [DISPENSARY, MED_CENTER, MED_CLINIC, NURSE_HOMES, HEALTH_CENTER, HOSPITAL]
             },
         ]
         };
@@ -1026,7 +1034,7 @@ if(chart == "bar_graph")
               fontSize: '18',
               fontFamily: "Open Sans",
               padding: "5 10",
-              text: "%npv%"
+              "text":"%t (%v)"
             },
             animation: {
               effect: 2,
@@ -1061,21 +1069,21 @@ if(chart == "bar_graph")
             },
             {
               values: [HEALTH_CENTER],
-              text: 'HEALTH CENTRE',
+              text: 'HEALTH CENTRES',
               backgroundColor: '#FFCB45'
             },
             {
-              text: 'MEDICAL CLINIC',
+              text: 'MEDICAL CLINICS',
               values: [MED_CLINIC],
               backgroundColor: '#6877e5'
             },
             {
-              text: 'MEDICAL CENTER',
+              text: 'MEDICAL CENTERS',
               values: [MED_CENTER],
               backgroundColor: '#7D0552'
             },
             {
-              text: 'NURSING HOME',
+              text: 'NURSING HOMES',
               values: [NURSE_HOMES],
               backgroundColor: '#6FB07F'
             }
@@ -1252,6 +1260,10 @@ if(chart == "bar_graph")
            "offset-x":"7px"
           }
                 },
+                plot: {
+                  styles: [ "red", "green", "#800080", "#F535AA" ]
+                 },
+            
             "scale-x":{  
                 label: { /* Scale Title */
                 text: "Facility Owner Categories",
@@ -1302,7 +1314,7 @@ if(chart == "bar_graph")
               fontSize: '18',
               fontFamily: "Open Sans",
               padding: "5 10",
-              text: "%npv%"
+              "text":"%t (%v)"
             },
             animation: {
               effect: 2,
@@ -1342,7 +1354,7 @@ if(chart == "bar_graph")
             },
            
             {
-              text: 'Faith Based Organization',
+              text: 'Faith Based Organizations',
               values: [faith_based],
               backgroundColor: '#6FB07F'
             }
@@ -1535,6 +1547,9 @@ if(chart == "bar_graph")
                 }
             
             },
+            plot: {
+              styles: [ "blue", "green"]
+             },
         "scale-x":{  
             label: { // Scale Title 
             text: "Bed and cots in "+f_operational+" Operational facilities"
@@ -1584,7 +1599,7 @@ var myConfig = {
       fontSize: '18',
       fontFamily: "Open Sans",
       padding: "5 10",
-      text: "%npv%"
+      "text":"%t (%v)"
     },
     animation: {
       effect: 2,
@@ -1793,6 +1808,9 @@ async function number_and_operational_getData(){
                      "offset-x":"7px"
                     }
                 },
+                plot: {
+                  styles: [ "#6AFB92", "green",  "red" ]
+                 },
             "scale-x":{  
                 label: { // Scale Title 
                 text: "Total facilities, Operational facilities and non_operational"
@@ -1841,7 +1859,7 @@ async function number_and_operational_getData(){
           fontSize: '18',
           fontFamily: "Open Sans",
           padding: "5 10",
-          text: "%npv%"
+          "text":"%t (%v)"
         },
         animation: {
           effect: 2,
@@ -2169,6 +2187,9 @@ if(chart == "bar_graph")
                  "offset-x":"7px"
                 }
             },
+            plot: {
+              styles: [ "blue", "green", "#800080", "#F535AA","yellow", "brown", "#151B54", "orange", "#6AFB92","red" ]
+             },
         "scale-x":{  
             label: { /* Scale Title */
             text: "Facility Owners",
@@ -2221,7 +2242,7 @@ else{
           fontSize: '18',
           fontFamily: "Open Sans",
           padding: "5 10",
-          text: "%npv%"
+          "text":"%t (%v)"
         },
         animation: {
           effect: 2,
@@ -2269,7 +2290,7 @@ else{
           },
         {
             values: [pp_academic],
-            text: "PP Private academic Institution ", 
+            text: "PP Private academic Institutions ", 
             
             backgroundColor: '#FFCB45',
             detached: true
@@ -2278,7 +2299,7 @@ else{
          
         
           {
-            text: " PP General Practitioner",
+            text: " PP General Practitioners",
             values: [pp_general],
             backgroundColor: '#191970'
           },
