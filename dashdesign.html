@@ -1,0 +1,138 @@
+<div id="my_pie_owner" style="margin-left: 20px;"></div>
+<script>
+    
+var ministry_of_health = 0;
+var faith_based = 0;
+var non_governmental = 0;
+var private_practice = 0;
+
+f_owner_category_getData();
+async function f_owner_category_getData(){
+const response = await fetch('kmfl.csv');
+const data = await response.text();
+// console.log(data);
+const rows = data.split('\n').slice(1);
+rows.forEach(elt => {
+const row = elt.split(',')
+const facility_owner_category = row[8];
+const County = row[12];
+
+const Sub_county = row[14];
+const Ward = row[15];
+
+if(facility_owner_category == 'Ministry of Health'){
+ministry_of_health = ministry_of_health + 1 ;
+}
+else if(facility_owner_category == 'Private Practice'){
+private_practice = private_practice + 1 ;
+}
+else if(facility_owner_category == 'Faith Based Organization'){
+faith_based = faith_based + 1 ;
+}
+else if(facility_owner_category == 'Non-Governmental Organizations'){
+non_governmental = non_governmental + 1 ;
+}
+
+else{
+
+}
+
+})
+//calculate maximum
+var f_owner_c_max = ministry_of_health;
+if(private_practice > f_owner_c_max)
+{
+f_owner_c_max = private_practice;
+}
+else if(faith_based > f_owner_c_max)
+{
+f_owner_c_max = faith_based;
+}
+else if(non_governmental > f_owner_c_max)
+{
+f_owner_c_max = non_governmental;
+}
+else{
+
+}
+
+f_owner_c_max = f_owner_c_max + 1;
+f_owner_c_max = Math.ceil((f_owner_c_max )/ 10) * 10;
+
+
+var mytitle;
+
+mytitle = "Facilities distribution rate based on Facility Owner Categories in Kenya";
+
+ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+var myConfig = {
+type: "pie",
+plot: {
+borderColor: "#2B313B",
+borderWidth: 2,
+// slice: 90,
+valueBox: {
+placement: 'out',
+text: '%t\n%npv%',
+fontFamily: "Open Sans"
+},
+tooltip: {
+fontSize: '18',
+fontFamily: "Open Sans",
+padding: "5 10",
+text: "%npv%"
+},
+animation: {
+effect: 2,
+method: 5,
+speed: 900,
+sequence: 1,
+delay: 50
+}
+},
+
+title: {
+fontColor: "#8e99a9",
+text: mytitle,
+align: "center",
+offsetX: 10,
+fontFamily: "Open Sans",
+fontSize: 20
+},
+plotarea: {
+margin: "20 0 0 0"
+},
+
+series: [{
+values: [non_governmental],
+text: "Non-Governmental Organizations",
+backgroundColor: '#50ADF5',
+},
+{
+values: [ministry_of_health],
+text: "Ministry of Health",
+backgroundColor: '#FF7965'
+},
+{
+values: [private_practice],
+text: 'Private Practice',
+backgroundColor: '#FFCB45'
+},
+
+{
+text: 'Faith Based Organization',
+values: [faith_based],
+backgroundColor: '#6FB07F'
+}
+]
+};
+
+zingchart.render({
+id: 'my_pie_owner',
+data: myConfig,
+height: '100%',
+width: '100%'
+});
+
+}
+</script>
